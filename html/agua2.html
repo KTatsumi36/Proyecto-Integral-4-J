@@ -1,0 +1,207 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cotización de Agua Pluvial</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<h1>Cotización de Sistema de Agua Pluvial</h1>
+
+<form id="cotizacionForm">
+    <h2>Tubería</h2>
+    <label for="tubo">Tipo de Tubo:</label>
+    <select id="tubo">
+        <option value="PVC">PVC Sanitario</option>
+        <option value="PEAD">PEAD Corrugado</option>
+        <option value="Concreto">Concreto Reforzado</option>
+    </select>
+
+    <label for="diametro">Diámetro del Tubo (mm):</label>
+    <select id="diametro">
+        <option value="100">100 mm</option>
+        <option value="150">150 mm</option>
+        <option value="200">200 mm</option>
+        <option value="300">300 mm</option>
+        <option value="400">400 mm</option>
+    </select>
+
+    <label for="metrosTubo">Cantidad de Metros de Tubo:</label>
+    <input type="number" id="metrosTubo" min="0" value="0">
+
+    <h2>Canaletas</h2>
+    <label for="metrosCanaleta">Cantidad de Metros de Canaleta:</label>
+    <input type="number" id="metrosCanaleta" min="0" value="0">
+
+    <h2>Accesorios</h2>
+    <label for="codos">Cantidad de Codos:</label>
+    <input type="number" id="codos" min="0" value="0">
+
+    <label for="rejillas">Cantidad de Rejillas:</label>
+    <input type="number" id="rejillas" min="0" value="0">
+
+    <label for="trampas">Cantidad de Trampas de Arena:</label>
+    <input type="number" id="trampas" min="0" value="0">
+
+    <label for="bajantes">Cantidad de Bajantes:</label>
+    <input type="number" id="bajantes" min="0" value="0">
+
+    <label for="conexiones">Cantidad de Conexiones en "Y":</label>
+    <input type="number" id="conexiones" min="0" value="0">
+
+    <label for="tapas">Cantidad de Tapas o Registros:</label>
+    <input type="number" id="tapas" min="0" value="0">
+
+    <label for="filtros">Cantidad de Filtros Pluviales:</label>
+    <input type="number" id="filtros" min="0" value="0">
+
+    <button type="button" onclick="calcularCotizacion()">Cotizar</button>
+</form>
+
+<div id="resultado" class="result" style="display:none;"></div>
+
+<script>
+    function calcularCotizacion() {
+        const tipoTubo = document.getElementById('tubo').value;
+        const diametro = document.getElementById('diametro').value;
+        const metrosTubo = parseFloat(document.getElementById('metrosTubo').value);
+        const metrosCanaleta = parseFloat(document.getElementById('metrosCanaleta').value);
+        const codos = parseInt(document.getElementById('codos').value);
+        const rejillas = parseInt(document.getElementById('rejillas').value);
+        const trampas = parseInt(document.getElementById('trampas').value);
+        const bajantes = parseInt(document.getElementById('bajantes').value);
+        const conexiones = parseInt(document.getElementById('conexiones').value);
+        const tapas = parseInt(document.getElementById('tapas').value);
+        const filtros = parseInt(document.getElementById('filtros').value);
+
+        let precioTubo = 0;
+        if (tipoTubo === 'PVC') {
+            if (diametro == 100) precioTubo = 80;
+            else if (diametro == 150) precioTubo = 120;
+            else if (diametro == 200) precioTubo = 180;
+            else if (diametro == 300) precioTubo = 250;
+            else if (diametro == 400) precioTubo = 350;
+        } else if (tipoTubo === 'PEAD') {
+            if (diametro == 100) precioTubo = 100;
+            else if (diametro == 150) precioTubo = 140;
+            else if (diametro == 200) precioTubo = 200;
+            else if (diametro == 300) precioTubo = 300;
+            else if (diametro == 400) precioTubo = 400;
+        } else if (tipoTubo === 'Concreto') {
+            if (diametro == 100) precioTubo = 150;
+            else if (diametro == 150) precioTubo = 200;
+            else if (diametro == 200) precioTubo = 300;
+            else if (diametro == 300) precioTubo = 450;
+            else if (diametro == 400) precioTubo = 600;
+        }
+
+        const precioCanaletaMetro = 90;
+        const precioCodo = 50;
+        const precioRejilla = 150;
+        const precioTrampa = 800;
+        const precioBajante = 350;
+        const precioConexion = 100;
+        const precioTapa = 250;
+        const precioFiltro = 500;
+
+        const total = (precioTubo * metrosTubo) + 
+                      (precioCanaletaMetro * metrosCanaleta) +
+                      (precioCodo * codos) +
+                      (precioRejilla * rejillas) +
+                      (precioTrampa * trampas) +
+                      (precioBajante * bajantes) +
+                      (precioConexion * conexiones) +
+                      (precioTapa * tapas) +
+                      (precioFiltro * filtros);
+
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.style.display = 'block';
+        resultadoDiv.innerHTML = `
+            <strong>Resumen de Cotización:</strong><br>
+            Tipo de Tubo: ${tipoTubo}<br>
+            Diámetro: ${diametro} mm<br>
+            Metros de Tubo: ${metrosTubo}<br>
+            Metros de Canaleta: ${metrosCanaleta}<br>
+            Codos: ${codos}<br>
+            Rejillas: ${rejillas}<br>
+            Trampas: ${trampas}<br>
+            Bajantes: ${bajantes}<br>
+            Conexiones en Y: ${conexiones}<br>
+            Tapas o Registros: ${tapas}<br>
+            Filtros Pluviales: ${filtros}<br><br>
+            <strong>Total: $${total.toFixed(2)} MXN</strong>
+        `;
+    }
+</script>
+
+</body>
+</html><style>body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(to right, #a2d2ff, #e0f7fa);
+    color: #333;
+}
+
+h1 {
+    color: #023e8a;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #0077b6;
+    margin-top: 30px;
+}
+
+form {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+}
+
+select, input[type="number"] {
+    padding: 8px;
+    margin-top: 5px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    margin-top: 30px;
+    padding: 12px 20px;
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005f8a;
+}
+
+.result {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 2px solid #0077b6;
+    border-radius: 10px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}</style>
