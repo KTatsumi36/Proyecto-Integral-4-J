@@ -5,22 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Principal - Proyecto Integral 4J</title>
     <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', Arial, sans-serif;
             background: linear-gradient(120deg, #0074D9 0%, #2ECC40 100%), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             text-align: center;
         }
         body::before {
@@ -35,7 +26,6 @@
             background: rgba(0, 116, 217, 0.92);
             padding: 2em 1em 2.2em 1em;
             margin-top: 2em;
-            text-align: center;
             color: #fff;
             font-size: 2.6em;
             font-weight: bold;
@@ -46,12 +36,50 @@
             z-index: 1;
             animation: fadeIn 1.1s ease;
         }
-        nav {
+        nav.menu-nav {
+            width: 100vw;
+            background: rgba(0,116,217,0.97);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+            display: flex;
+            justify-content: center;
+        }
+        .menu-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2em;
+            list-style: none;
+            padding: 0.8em 0;
+        }
+        .menu-list li {
+            position: relative;
+        }
+        .menu-link {
+            color: #fff;
+            font-size: 1.18em;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.3em 1.2em;
+            border-radius: 22px;
+            transition: background 0.25s, color 0.18s;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+        .menu-link.active,
+        .menu-link:hover {
+            background: #2ECC40;
+            color: #0074D9;
+        }
+        .nav-btns {
+            margin-top: 7em;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 1.8em;
-            margin: 2.5em 0 2em 0;
             z-index: 1;
             position: relative;
         }
@@ -70,30 +98,16 @@
             letter-spacing: 1px;
             position: relative;
         }
-        .nav-btn::after {
-            content: '';
-            display: block;
-            position: absolute;
-            bottom: 12px; left: 35%;
-            width: 30%; height: 2px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 2px;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
         .nav-btn:hover, .nav-btn:focus {
             background: linear-gradient(120deg, #0074D9 60%, #2ECC40 100%);
             transform: translateY(-5px) scale(1.08);
             box-shadow: 0 12px 32px rgba(0,0,0,0.24);
         }
-        .nav-btn:hover::after, .nav-btn:focus::after {
-            opacity: 1;
-        }
         main {
             color: #fff;
             max-width: 700px;
             padding: 2.2em 2em 2em 2em;
-            margin: 1.2em 0 2.2em 0;
+            margin: 1.2em auto 2.2em auto;
             border-radius: 22px;
             background: rgba(0, 0, 0, 0.66);
             box-shadow: 0 6px 18px rgba(0,0,0,0.3);
@@ -136,17 +150,14 @@
             transform: scale(1.25) rotate(-9deg);
             text-shadow: 0 2px 8px #2ECC40;
         }
+        @media (max-width: 900px) {
+            .menu-list { gap: 1em; }
+            .nav-btns { flex-direction: column; gap: 1em; }
+        }
         @media (max-width: 700px) {
             header {
                 font-size: 1.5em;
                 padding: 1em 0.5em 1.2em 0.5em;
-            }
-            nav {
-                gap: 0.7em;
-            }
-            .nav-btn {
-                font-size: 1em;
-                padding: 0.9em 1.3em;
             }
             main {
                 padding: 1.2em 0.7em;
@@ -155,11 +166,10 @@
                 font-size: 1.3em;
                 margin: 0 0.6em;
             }
+            .menu-link { font-size: 1em; padding: 0.3em 0.6em; }
         }
         @media (max-width: 400px) {
-            header {
-                font-size: 1.1em;
-            }
+            header { font-size: 1.1em; }
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-30px);}
@@ -173,22 +183,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
+    <!-- Menu de navegación superior -->
+    <nav class="menu-nav">
+        <ul class="menu-list">
+            <li><a class="menu-link active" href="#"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a class="menu-link" href="#calculo"><i class="fas fa-calculator"></i> Cálculo</a></li>
+            <li><a class="menu-link" href="#informacion"><i class="fas fa-info-circle"></i> Información</a></li>
+            <li><a class="menu-link" href="#colocacion"><i class="fas fa-map-marker-alt"></i> Colocación</a></li>
+            <li><a class="menu-link" href="#importancia"><i class="fas fa-star"></i> Importancia</a></li>
+        </ul>
+    </nav>
     <header>
         Bienvenido a la Página Principal
     </header>
-    <nav>
+    <div class="nav-btns">
         <button class="nav-btn" onclick="location.href='#calculo'"><i class="fas fa-calculator"></i> Cálculo</button>
         <button class="nav-btn" onclick="location.href='#informacion'"><i class="fas fa-info-circle"></i> Información</button>
         <button class="nav-btn" onclick="location.href='#colocacion'"><i class="fas fa-map-marker-alt"></i> Colocación</button>
         <button class="nav-btn" onclick="location.href='#importancia'"><i class="fas fa-star"></i> Importancia</button>
-    </nav>
+    </div>
     <main>
         <h2>Proyecto Integral 4J</h2>
         <p>
             Bienvenido a la plataforma digital de nuestro proyecto. Aquí encontrarás recursos interactivos y toda la información necesaria sobre los temas de Cálculo, Información, Colocación e Importancia.
         </p>
         <p>
-            Navega usando los botones superiores para descubrir más sobre cada sección. ¡Gracias por visitarnos y ser parte de este proyecto educativo!
+            Navega usando los menús y botones superiores para descubrir más sobre cada sección. ¡Gracias por visitarnos y ser parte de este proyecto educativo!
         </p>
     </main>
     <footer>
